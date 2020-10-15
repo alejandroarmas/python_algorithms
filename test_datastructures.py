@@ -49,6 +49,41 @@ class TestGraph(unittest.TestCase):
 		self.assertEqual(path_2, expected_path_2)
 		self.assertEqual(path_3, expected_path_3)
 
+	def test_depth_first_search(self):
+		path_1 = self.obj_1.depth_first_search("A")
+		# {Node : Parent}
+		expected_path_1 = {
+			"A": None,
+			"B": "A",
+			"C": "A",
+			"D": "B",
+			"E": "B",
+			"F": "C"
+		}
+		path_2 = self.obj_1.depth_first_search("B")
+		expected_path_2 = {
+			"A": None,
+			"B": None,
+			"C": None,
+			"D": "B",
+			"E": "B",
+			"F": "E"
+		}
+		path_3 = self.obj_1.depth_first_search("F")
+		expected_path_3 = {
+			"A": None,
+			"B": None,
+			"C": None,
+			"D": None,
+			"E": None,
+			"F": None
+		}
+
+		self.assertEqual(path_1, expected_path_1)
+		self.assertEqual(path_2, expected_path_2)
+		self.assertEqual(path_3, expected_path_3)
+
+
 class TestHeap(unittest.TestCase):
 	dat_1 = dat_2 = None
 

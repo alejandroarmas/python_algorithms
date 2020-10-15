@@ -152,7 +152,7 @@ class Graph():
 		# G = {v: e for v, e in zip(V, E)}
 		# Use this to generate Graph of our Vertix and Edges only when you want to filter based on keys or values
 
-	def breadth_first_search(self, init_vertex: str = None) -> None:
+	def breadth_first_search(self, init_vertex: str = None) -> "Dict() of {Node: Parent}":
 		'''
 		Efficient algorithm for level-order searching through a graph.
 		Time complexity: O(log(n + m)) where n is # of nodes and m is # of edges.
@@ -176,29 +176,72 @@ class Graph():
 		queue = deque(maxlen=num_vertices)  # Treat our double-ended queue as a queue
 
 		# Begin from a random Vertex
-		init_vertex = vertices[np.random.randint(0, num_vertices - 1)] if init_vertex is None else init_vertex.upper()
+		rand_index = np.random.randint(0, num_vertices - 1)
+		init_vertex = vertices[rand_index] if init_vertex is None else init_vertex.upper()
 		discovered[init_vertex] = True
-
-		queue.append(init_vertex)  # Enqueue the initial vertex.
-
-		while not queue.__len__() == 0:
-			# While the queue is not empty we explore the current node.
+		# Enqueue the initial vertex.
+		queue.append(init_vertex)
+		while queue:
+			# While the queue is not empty we explore the first queued node.
 			curr_node = queue.popleft()  # Dequeue the current vertex <- "Explored" i.e. we do stuff with current node.
 			print(f"Processed {curr_node}!")  # This is the space in your algorithm where you do stuff.
 
 			for incident_vertex in self.G[curr_node]:
 				# for each current node, you will add all incident nodes to the queue if they have not been discovered.
-				if discovered[incident_vertex] == False:
+				if not discovered[incident_vertex]:
 					discovered[incident_vertex] = True
 					parent[incident_vertex] = curr_node
 					queue.append(incident_vertex)
 		return parent
 
 
-	def depth_first_search(self):
-		pass
+	def depth_first_search(self, init_vertex: str = None)-> "Dict() of {Node: Parent}":
+		'''
+		Efficient algorithm for post-order searching through a graph.
+		Time complexity: O(log(n + m)) where n is # of nodes and m is # of edges.
+		Space complexity: O(log(n)) where n is the # of nodes that need to be "explored".
+
+		:param Char. init_vertix: Vertex to begin the search at.
+
+		Idea:
+
+		1. Add a node to the stack
+		2. Remove node
+		3. Retrieve unexplored neighbors of the removed node, add them to stack
+		4. Repeat steps 1, 2, and 3 as long as the stack is not empty.
+		'''
+		vertices = list(self.G.keys())  # Extract the list of vertices
+		num_vertices = vertices.__len__()
+		explored = dict(zip(vertices, [False] * num_vertices))  # Initialize list of tuples denoting all vertices are yet to be found.
+		parent = dict(zip(vertices, [None] * num_vertices))  # Initialize list of tuples denoting all vertices parents in new search tree.
+
+		stack = deque(maxlen=num_vertices)  # Treat our double-ended queue as a stack
+
+		# Begin from a random Vertex
+		rand_index = np.random.randint(0, num_vertices - 1)
+		init_vertex = vertices[rand_index] if init_vertex is None else init_vertex.upper()
+		# Add first vertex
+		stack.append(init_vertex)
+		while stack:  # While the stack is not empty we explore latest node added
+			curr_node = stack.pop()
+			if not explored[curr_node]:
+				print(f"Processed {curr_node}!")  # This is the space in your algorithm where you do stuff.
+				explored[curr_node] = True
+
+				for incident_node in self.G[curr_node]:
+					if not explored[incident_node]:
+						parent[incident_node] = curr_node
+						stack.append(incident_node)
+		return parent
 
 
-
-
-print("Done!")
+# print("Done!")
+#
+#
+# V = ["A", "B", "C", "D", "E", "F"]
+# E = [["B", "C"], ["D", "E"], ["F"], [], ["F"], []]
+# G = Graph(V, E)
+#
+# G.depth_first_search("A")
+# print("\n")
+# G.breadth_first_search("A")
