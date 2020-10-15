@@ -152,7 +152,7 @@ class Graph():
 		# G = {v: e for v, e in zip(V, E)}
 		# Use this to generate Graph of our Vertix and Edges only when you want to filter based on keys or values
 
-	def breadth_first_search(self, init_vertex: str = None) -> "Dict() of {Node: Parent}":
+	def breadth_first_search(self, init_vertex: str = None) -> "List of Search order":
 		'''
 		Efficient algorithm for level-order searching through a graph.
 		Time complexity: O(log(n + m)) where n is # of nodes and m is # of edges.
@@ -200,7 +200,7 @@ class Graph():
 		return order
 
 
-	def depth_first_search(self, init_vertex: str = None)-> "Dict() of {Node: Parent}":
+	def depth_first_search(self, init_vertex: str = None)-> "List of search order":
 		'''
 		Efficient algorithm for post-order traversal through a graph.
 		Time complexity: O(log(n + m)) where n is # of nodes and m is # of edges.
