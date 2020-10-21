@@ -1,22 +1,39 @@
 import unittest
 from datastructures import Heap, Graph
-
 class TestGraph(unittest.TestCase):
 
 	obj_1 = None
 
 	def setUp(self) -> None:
-		V = ["A", "B", "C", "D", "E", "F"]
-		E = [["B", "C"], ["D", "E"], ["F"], [], ["F"], []]
-		self.obj_1 = Graph(V, E)
+		# Test a non-weighted graph for traversal algorithms
+		V_1 = ["A", "B", "C", "D", "E", "F"]
+		V_2 = ["A", "B", "C", "D", "E", "F"]
+		E_1 = [
+			["B", "C"],
+			["D", "E"],
+			["F"],
+			[],
+			["F"],
+			[]
+		]
 
+		W_2 = [
+			[1, 2],
+			[1, 1],
+			[2],
+			[],
+			[1],
+			[]
+		]
+		self.obj_1 = Graph(V_1, E_1)
+		self.obj_2 = Graph(V_2, E_1, W_2)
 
 	def test_init(self):
-		self.assertEqual(self.obj_1.G["B"], ["D", "E"])
+		self.assertEqual(self.obj_1.G["B"], [("D", 1), ("E", 1)])
 
 
-	def test_breadth_first_level_search(self):
-		# Level Search.
+	def test_breadth_first_levelorder_search(self):
+		# Level-Order Search.
 
 		path_1 = self.obj_1.breadth_first_search("A")
 		path_2 = self.obj_1.breadth_first_search("B")
@@ -31,7 +48,7 @@ class TestGraph(unittest.TestCase):
 		self.assertEqual(path_3, expected_path_3)
 
 
-	def test_depth_first_post_search(self):
+	def test_depth_first_postorder_search(self):
 		# Post-order Search.
 
 		path_1 = self.obj_1.depth_first_search("A")
@@ -45,6 +62,13 @@ class TestGraph(unittest.TestCase):
 		self.assertEqual(path_1, expected_path_1)
 		self.assertEqual(path_2, expected_path_2)
 		self.assertEqual(path_3, expected_path_3)
+
+
+	def test_dijkstra(self):
+		# Test Weighted Graph
+		self.assertEqual(self.obj_2.dijkstra("A")["target_dist"]["F"], 3)
+		# Test unWeighted Graph
+		self.assertEqual(self.obj_1.dijkstra("A")["target_dist"]["F"], 2)
 
 
 class TestHeap(unittest.TestCase):
