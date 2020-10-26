@@ -213,11 +213,18 @@ class Graph():
 		queue.append(init_vertex)
 		while queue:
 			# While the queue is not empty we explore the first queued node.
-			curr_node = queue.popleft()  # Dequeue the current vertex <- "Explored" i.e. we do stuff with current node.
-			# print(f"Processed {curr_node}!")  # This is the space in your algorithm where you do stuff.
+
+			# Dequeue the current vertex <- "Explored" i.e. we do stuff with current node.
+			curr_node = queue.popleft() 
+			#####											########
+			# This is the space in your algorithm where you do stuff.
+			#####											########
+
 			order.append(curr_node)  # Only used for unittesting correctness.
+			
 			for incident_vertex in self.G[curr_node]:
-				# for each current node, you will add all incident nodes to the queue if they have not been discovered.
+				# for each current node, you will add all incident nodes
+				# to the queue if they have not been discovered.
 				if not discovered[incident_vertex.vertex]:
 					discovered[incident_vertex.vertex] = True
 					# parent[incident_vertex] = curr_node
@@ -326,4 +333,6 @@ class Graph():
 	# 	"""
 	# 	vertices = copy.deepcopy(self.G.keys())
 	# 	pass
+
+print("Hello world")
 

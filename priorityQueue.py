@@ -11,7 +11,8 @@ class PriorityQueue():
 
 	def __init__(self, arr=None):
 		'''
-		Conditional Statement is done to avoid a persistent list in the mutable argument among all instances of this class.
+		Conditional Statement is done to avoid a persistent list in the 
+		mutable argument among all instances of this class.
 		If you did not do this then all data would be shared.
 		:param arr: array of values
 		'''
