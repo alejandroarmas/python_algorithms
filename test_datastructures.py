@@ -1,5 +1,5 @@
 import unittest
-from datastructures import Heap, Graph
+from datastructures import Heap, Graph, Sort
 
 
 class TestGraph(unittest.TestCase):
@@ -123,6 +123,32 @@ class TestHeap(unittest.TestCase):
 	def tearDown(self) -> None:
 		self.dat_1 = None
 		self.dat_2 = None
+
+
+class TestSort(unittest.TestCase):
+
+	def setUp(self):
+		data_1 = [6, 3, 7, 2, 4, 6]
+		data_2 = ["b", "d", "g", "a", "j", "c"]
+
+		self.sortObj1 = Sort(data_1) 
+		self.sortObj2 = Sort(data_2)
+		self.sortObj3 = Sort()
+		self.sortObj4 = Sort([2])
+
+	def test_quicksort(self):
+		sorted_list_1 = self.sortObj1.quicksort()
+		sorted_list_2 = self.sortObj2.quicksort()
+		self.assertEqual(sorted_list_1, [2, 3, 4, 6, 6, 7])
+		self.assertEqual(sorted_list_2, ["a", "b", "c", "d", "g", "j"])
+
+	
+	def test_quicksort_edge(self):
+		sorted_list_3 = self.sortObj3.quicksort()
+		sorted_list_4 = self.sortObj4.quicksort()
+		self.assertEqual(sorted_list_3, [])
+		self.assertEqual(sorted_list_4, [2])
+		
 
 
 if __name__ == "__main__":
