@@ -1,4 +1,5 @@
 import unittest
+
 from datastructures import Heap, Graph, Sort
 
 
@@ -88,10 +89,12 @@ class TestGraph(unittest.TestCase):
 	def test_dijkstra(self):
 		init_vertex = "A"
 		target_vertex = "F"
+
 		# Test Weighted Graph
 		self.assertEqual(
 			self.directed_weighted_graph.dijkstra(init_vertex)
 			["target_dist"][target_vertex], 3)
+
 		# Test unWeighted Graph
 		self.assertEqual(
 			self.directed_graph.dijkstra(init_vertex)
@@ -100,7 +103,7 @@ class TestGraph(unittest.TestCase):
 
 class TestHeap(unittest.TestCase):
 	
-	dat_1 = dat_2 = None
+	data_we_want_sorted = single_item_heap = None
 
 
 	# Method prepares the test fixture
@@ -108,9 +111,10 @@ class TestHeap(unittest.TestCase):
 		list_1 = [1, 6, 2, 2, 23, 54, 43]
 		list_2 = [1]
 		list_3 = [5, 3, 2]
-		self.dat_1 = Heap(list_1)
-		self.dat_2 = Heap(list_2)
-		self.dat_3 = Heap(list_3)
+
+		self.data_we_want_sorted = Heap(list_1)
+		self.single_item_heap = Heap(list_2)
+		self.three_item_heap = Heap(list_3)
 
 
 	def test_parent(self):
@@ -122,33 +126,34 @@ class TestHeap(unittest.TestCase):
 
 
 	def test_add(self):
-		self.dat_3.add(1)
-		self.assertEqual(len(self.dat_3), 4)
-		self.assertEqual(self.dat_3.data, [5, 3, 2, 1])
+		self.three_item_heap.add(1)
+		self.assertEqual(len(self.three_item_heap), 4)
+		self.assertEqual(self.three_item_heap.data, [5, 3, 2, 1])
 
 
 	def test_remove(self):
-		self.dat_2.remove()
-		self.dat_3.remove(-1)
-		self.assertEqual(self.dat_2.data, [])
-		self.assertEqual(self.dat_3.data, [5, 3])
+		self.single_item_heap.remove()
+		self.three_item_heap.remove(-1)
+		self.assertEqual(self.single_item_heap.data, [])
+		self.assertEqual(self.three_item_heap.data, [5, 3])
 
 
 	def test_max_heapify(self):
-		self.dat_2.max_heapify(0)
-		self.assertEqual(self.dat_2.data, [1])
-		self.dat_2.add(2)
-		self.assertEqual(self.dat_2.data, [2, 1])
+		self.single_item_heap.max_heapify(0)
+		self.assertEqual(self.single_item_heap.data, [1])
+		self.single_item_heap.add(2)
+		self.assertEqual(self.single_item_heap.data, [2, 1])
 
 
 	def test_sort(self):
-		self.assertEqual(self.dat_1.heapsort(), [54, 43, 23, 6, 2, 2, 1])
-		self.assertEqual(self.dat_2.heapsort(), [1])
+		sorted_data = [54, 43, 23, 6, 2, 2, 1]
+
+		self.assertEqual(self.data_we_want_sorted.heapsort(), sorted_data)
+		self.assertEqual(self.single_item_heap.heapsort(), [1])
 
 
 	def tearDown(self) -> None:
-		self.dat_1 = None
-		self.dat_2 = None
+		self.data_we_want_sorted = self.three_item_heap = self.single_item_heap = None
 
 
 class TestSort(unittest.TestCase):
@@ -157,23 +162,23 @@ class TestSort(unittest.TestCase):
 		data_1 = [6, 3, 7, 2, 4, 6]
 		data_2 = ["b", "d", "g", "a", "j", "c"]
 
-		self.sortObj1 = Sort(data_1) 
-		self.sortObj2 = Sort(data_2)
-		self.sortObj3 = Sort()
-		self.sortObj4 = Sort([2])
+		self.integer_array = Sort(data_1) 
+		self.character_array = Sort(data_2)
+		self.empty_array = Sort()
+		self.single_item_array = Sort([2])
 
 	def test_quicksort(self):
-		sorted_list_1 = self.sortObj1.quicksort()
-		sorted_list_2 = self.sortObj2.quicksort()
-		self.assertEqual(sorted_list_1, [2, 3, 4, 6, 6, 7])
-		self.assertEqual(sorted_list_2, ["a", "b", "c", "d", "g", "j"])
+		sorted_integers = self.integer_array.quicksort()
+		sorted_characters = self.character_array.quicksort()
+		self.assertEqual(sorted_integers, [2, 3, 4, 6, 6, 7])
+		self.assertEqual(sorted_characters, ["a", "b", "c", "d", "g", "j"])
 
 	
 	def test_quicksort_edge(self):
-		sorted_list_3 = self.sortObj3.quicksort()
-		sorted_list_4 = self.sortObj4.quicksort()
-		self.assertEqual(sorted_list_3, [])
-		self.assertEqual(sorted_list_4, [2])
+		sorted_empty = self.empty_array.quicksort()
+		sorted_single_item = self.single_item_array.quicksort()
+		self.assertEqual(sorted_empty, [])
+		self.assertEqual(sorted_single_item, [2])
 		
 
 
