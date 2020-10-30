@@ -1,6 +1,8 @@
 import unittest
 
-from datastructures import Heap, Graph, Sort
+from datastructures.heap import Heap
+from datastructures.sort import Sort 
+from datastructures.graph import Graph
 
 
 class TestGraph(unittest.TestCase):
