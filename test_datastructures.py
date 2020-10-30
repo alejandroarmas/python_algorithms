@@ -4,13 +4,13 @@ from datastructures import Heap, Graph, Sort
 
 class TestGraph(unittest.TestCase):
 
-	obj_1 = None
+	directed_graph = directed_weighted_graph = None
+	
 
 	def setUp(self) -> None:
-		# Test a non-weighted graph for traversal algorithms
-		V_1 = ["A", "B", "C", "D", "E", "F"]
-		V_2 = ["A", "B", "C", "D", "E", "F"]
-		E_1 = [
+
+		vertix_set = ["A", "B", "C", "D", "E", "F"]
+		edge_set = [
 			["B", "C"],
 			["D", "E"],
 			["F"],
@@ -19,7 +19,7 @@ class TestGraph(unittest.TestCase):
 			[]
 		]
 
-		W_2 = [
+		weights = [
 			[1, 2],
 			[1, 1],
 			[2],
@@ -27,53 +27,79 @@ class TestGraph(unittest.TestCase):
 			[1],
 			[]
 		]
-		self.obj_1 = Graph(V_1, E_1)
-		self.obj_2 = Graph(V_2, E_1, W_2)
+
+		self.directed_graph = Graph(vertix_set, edge_set)
+		self.directed_weighted_graph = Graph(vertix_set, edge_set, weights)
 
 	def test_init(self):
-		self.assertEqual(self.obj_1.G["B"], [("D", 1), ("E", 1)])
+		self.assertEqual(self.directed_graph.G["B"], [("D", 1), ("E", 1)])
 
 
 	def test_breadth_first_levelorder_search(self):
-		# Level-Order Search.
+		path_beginning_vertex_a = self.directed_graph.breadth_first_search("A")
+		expected_path_beginning_vertex_a = ["A", "B", "C", "D", "E", "F"]
 
-		path_1 = self.obj_1.breadth_first_search("A")
-		path_2 = self.obj_1.breadth_first_search("B")
-		path_3 = self.obj_1.breadth_first_search("F")
+		self.assertEqual(
+			path_beginning_vertex_a,
+			 expected_path_beginning_vertex_a)
 
-		expected_path_1 = ["A", "B", "C", "D", "E", "F"]
-		expected_path_2 = ["B", "D", "E", "F"]
-		expected_path_3 = ["F"]
 
-		self.assertEqual(path_1, expected_path_1)
-		self.assertEqual(path_2, expected_path_2)
-		self.assertEqual(path_3, expected_path_3)
+	def test_breadth_first_levelorder_search_center_vertex(self):
+		path_beginning_vertex_middle = self.directed_graph.breadth_first_search("B")
+		expected_path_beginning_vertex_middle = ["B", "D", "E", "F"]
+
+		self.assertEqual(
+			path_beginning_vertex_middle,
+			 expected_path_beginning_vertex_middle)
+
+	
+	def test_breadth_first_levelorder_search_no_outbound(self):
+		path_beginning_vertex_no_outbound = self.directed_graph.breadth_first_search("F")
+		expected_path_beginning_vertex_no_outbound = ["F"]
+
+		self.assertEqual(
+			path_beginning_vertex_no_outbound,
+			 expected_path_beginning_vertex_no_outbound)
 
 
 	def test_depth_first_postorder_search(self):
-		# Post-order Search.
+		path_beginning_vertex_a = self.directed_graph.depth_first_search("A")
+		expected_path_beginning_vertex_a = ["A", "C", "F", "B", "E", "D"]
+		
+		self.assertEqual(path_beginning_vertex_a, expected_path_beginning_vertex_a)
 
-		path_1 = self.obj_1.depth_first_search("A")
-		path_2 = self.obj_1.depth_first_search("B")
-		path_3 = self.obj_1.depth_first_search("F")
 
-		expected_path_1 = ["A", "C", "F", "B", "E", "D"]
-		expected_path_2 = ["B", "E", "F", "D"]
-		expected_path_3 = ["F"]
+	def test_depth_first_postorder_search_center_vertex(self):
+		path_beginning_vertex_middle = self.directed_graph.depth_first_search("B")
+		expected_path_beginning_vertex_middle = ["B", "E", "F", "D"]
+		
+		self.assertEqual(path_beginning_vertex_middle,
+		 expected_path_beginning_vertex_middle)
 
-		self.assertEqual(path_1, expected_path_1)
-		self.assertEqual(path_2, expected_path_2)
-		self.assertEqual(path_3, expected_path_3)
+
+	def test_depth_first_postorder_search_no_outbound(self):
+		path_beginning_vertex_no_outbound = self.directed_graph.depth_first_search("F")
+		expected_path_beginning_vertex_no_outbound = ["F"]
+		
+		self.assertEqual(path_beginning_vertex_no_outbound,
+		 expected_path_beginning_vertex_no_outbound)
 
 
 	def test_dijkstra(self):
+		init_vertex = "A"
+		target_vertex = "F"
 		# Test Weighted Graph
-		self.assertEqual(self.obj_2.dijkstra("A")["target_dist"]["F"], 3)
+		self.assertEqual(
+			self.directed_weighted_graph.dijkstra(init_vertex)
+			["target_dist"][target_vertex], 3)
 		# Test unWeighted Graph
-		self.assertEqual(self.obj_1.dijkstra("A")["target_dist"]["F"], 2)
+		self.assertEqual(
+			self.directed_graph.dijkstra(init_vertex)
+			["target_dist"][target_vertex], 2)
 
 
 class TestHeap(unittest.TestCase):
+	
 	dat_1 = dat_2 = None
 
 
