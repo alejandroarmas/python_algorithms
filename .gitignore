@@ -1,0 +1,8 @@
+
+# Byte-compiled / optimized / DLL files
+datastructures/__pycache__/*
+__pycache__/*
+*.pyc
+
+.idea
+.vscode

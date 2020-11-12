@@ -2,7 +2,7 @@ import copy
 from collections import deque, namedtuple
 import numpy as np
 
-from priorityQueue import PriorityQueue
+from .priorityQueue import PriorityQueue
 
 
 class Graph():

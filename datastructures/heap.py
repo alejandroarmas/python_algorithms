@@ -3,7 +3,7 @@ from collections import deque, namedtuple
 import numpy as np
 # Double Ended Queue Object for both stack
 # and queue operations.
-from priorityQueue import PriorityQueue
+from .priorityQueue import PriorityQueue
 
 
 class Heap():
