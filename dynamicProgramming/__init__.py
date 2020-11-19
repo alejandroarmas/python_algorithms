@@ -1,2 +1,2 @@
 from .coinFlipping import coinFlipping
-from .fiboncacci import fibonacci
+from .fibonacci import fibonacci

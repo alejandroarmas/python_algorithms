@@ -16,7 +16,7 @@ def coinFlipping(n):
         "penny": 1
     }
 
-    memo = {}
+    memo = {0:0}
 
     def __coinFlipping(change):
 
@@ -32,7 +32,11 @@ def coinFlipping(n):
                 memo[change] = 1 + min(results)
         return memo[change]         
             
-    __coinFlipping(n)
-    
-    return memo[n]
+    if n > 0:
+        __coinFlipping(n)
+        minimumCoins = memo[n]
+    else:
+        minimumCoins = memo[0]
+
+    return minimumCoins
 
