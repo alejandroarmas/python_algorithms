@@ -25,5 +25,17 @@ class TestSort(unittest.TestCase):
 		sorted_single_item = self.single_item_array.quicksort()
 		self.assertEqual(sorted_empty, [])
 		self.assertEqual(sorted_single_item, [2])
-		
 
+
+	def test_mergeSort(self):
+			sorted_integers = self.integer_array.mergeSort()
+			sorted_characters = self.character_array.mergeSort()
+			self.assertEqual(sorted_integers, [2, 3, 4, 6, 6, 7])
+			self.assertEqual(sorted_characters, ["a", "b", "c", "d", "g", "j"])
+
+	
+	def test_mergeSort_edge(self):
+		sorted_empty = self.empty_array.mergeSort()
+		sorted_single_item = self.single_item_array.mergeSort()
+		self.assertEqual(sorted_empty, [])
+		self.assertEqual(sorted_single_item, [2])
