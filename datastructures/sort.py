@@ -80,4 +80,56 @@ class Sort():
 			data[low], data[high] = data[high], data[low]
 			low += 1
 			high -= 1
-			
+
+
+	def mergeSort(self): 
+			"""
+			Divide and Conquor strategy for sorting list. 
+			O(n*log(n)) Time complexity. 
+			"""
+			data = copy.deepcopy(self.data)  # Copy data 
+			sortedData = Sort.__mergeSort(data)
+			return sortedData
+
+
+	@staticmethod
+	def __merge(leftHalfData, rightHalfData):
+		
+		if leftHalfData is None:
+			sortedData = rightHalfData
+		elif rightHalfData is None:
+			sortedData = leftHalfData
+		else:
+			sortedData = []
+			leftDataIndex = rightDataIndex = 0
+
+			while leftDataIndex < len(leftHalfData) and rightDataIndex < len(rightHalfData):
+
+				if leftHalfData[leftDataIndex] < rightHalfData[rightDataIndex]:
+					sortedData.append(leftHalfData[leftDataIndex])
+					leftDataIndex += 1
+				else:
+					sortedData.append(rightHalfData[rightDataIndex])
+					rightDataIndex += 1
+
+			leftFullyInsertedIntoSorted = leftDataIndex == len(leftHalfData)
+			rightFullyInsertedIntoSorted = rightDataIndex == len(rightHalfData)
+
+			if not leftFullyInsertedIntoSorted:
+				sortedData += leftHalfData[leftDataIndex:] 
+			elif not rightFullyInsertedIntoSorted:
+				sortedData += rightHalfData[rightDataIndex:]
+		return sortedData
+
+
+	@staticmethod
+	def __mergeSort(data):
+		
+		if len(data) < 2:
+			sortedData = data
+		else:
+			midPoint = len(data) // 2
+			leftHalfData = Sort.__mergeSort(data[:midPoint])
+			rightHalfData = Sort.__mergeSort(data[midPoint:])
+			sortedData = Sort.__merge(leftHalfData, rightHalfData)
+		return sortedData
