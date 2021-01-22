@@ -51,8 +51,8 @@ function map_number_to_string(number) {
 		            output = `twenty ${NUMBER_STRING_MAP[ones_place_digit]}`
 		        }
 	    else if (number === HALF_AN_HOUR){
-		            output = "thirty";
-		        }
+				output = "half";
+		}
 	    
 	    return output;
 }
@@ -64,8 +64,8 @@ function timeInWords(hour, minute) {
 	    
 	    if (adjusted_minutes === 1) {
 		            adjusted_minutes_string += " minute";
-		        } else if (adjusted_minutes > HIT_THE_HOUR & adjusted_minutes !== QUARTER) {
-				        adjusted_minutes_string += " minutes";
+				} else if (adjusted_minutes > HIT_THE_HOUR & adjusted_minutes !== QUARTER & adjusted_minutes !== HALF_AN_HOUR) {
+					adjusted_minutes_string += " minutes";
 				    }
 	    
 	    
