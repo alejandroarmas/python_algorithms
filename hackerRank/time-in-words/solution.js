@@ -61,24 +61,29 @@ function timeInWords(hour, minute) {
 	    
 	    const adjusted_minutes = (minute <= HALF_AN_HOUR ? minute : HOUR - minute);
 	    let adjusted_minutes_string = map_number_to_string(adjusted_minutes);    
-	    
-	    if (adjusted_minutes === 1) {
+		let output = "";
+		
+
+	    if (adjusted_minutes === HIT_THE_HOUR + 1) {
 		            adjusted_minutes_string += " minute";
-				} else if (adjusted_minutes > HIT_THE_HOUR & adjusted_minutes !== QUARTER & adjusted_minutes !== HALF_AN_HOUR) {
-					adjusted_minutes_string += " minutes";
-				    }
+		} 
+		else if (adjusted_minutes > HIT_THE_HOUR & adjusted_minutes !== QUARTER & adjusted_minutes !== HALF_AN_HOUR) {
+			adjusted_minutes_string += " minutes";
+		}
 	    
 	    
 	    if (minute === HIT_THE_HOUR) {
-		            return `${map_number_to_string(hour)} o' clock`
-		        }
+
+			output = `${map_number_to_string(hour)} o' clock`
+		}
 	    else if (minute <= HALF_AN_HOUR) {
-		            
-		            return `${adjusted_minutes_string} past ${map_number_to_string(hour)}`;
-		        }
+				
+			output = `${adjusted_minutes_string} past ${map_number_to_string(hour)}`;
+		}
 	    else if (minute < HOUR){
-		            return `${adjusted_minutes_string} to ${map_number_to_string(hour + 1)}`;
-		        }
+			output = `${adjusted_minutes_string} to ${map_number_to_string(hour + 1)}`;
+		}
+		return output;
 }
 
 function main() {
